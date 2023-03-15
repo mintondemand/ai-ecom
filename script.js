@@ -11,7 +11,7 @@ form.addEventListener('submit', async (event) => {
 
   if (product_image.files.length > 0) {
     const imageFile = product_image.files[0];
-    const photoroom_api_key = '<YOUR_PHOTOROOM_API_KEY>';
+    const photoroom_api_key = '1d0efc1d230df747a31e4455757913d4a39d43e5';
     const photoroom_url = 'https://sdk.photoroom.com/v1/segment';
     const formData = new FormData();
     formData.append('image_file', imageFile);
@@ -33,7 +33,7 @@ form.addEventListener('submit', async (event) => {
   }
 
   const prompt = `Generate a product description for ${product_name.value}, a ${product_type.value} that ${product_details.value}.`;
-  const api_key = '<YOUR_OPENAI_API_KEY>';
+  const api_key = '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';
   const model = 'text-davinci-002';
   const url = `https://api.openai.com/v1/engines/${model}/completions`;
   const body = {
