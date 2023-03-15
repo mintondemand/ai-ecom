@@ -33,7 +33,7 @@ form.addEventListener('submit', async (event) => {
   }
 
   const prompt = `Generate a product description for ${product_name.value}, a ${product_type.value} that ${product_details.value}.`;
-  const api_key = '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';
+  const api_key = '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';
   const model = 'text-davinci-002';
   const url = `https://api.openai.com/v1/engines/${model}/completions`;
   const body = {
