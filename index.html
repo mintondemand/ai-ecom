@@ -17,13 +17,49 @@
         <option value="Tank Top">Tank Top</option>
       </select><br><br>
       <label for="product-image">Product Image:</label>
-      <input type="file" id="product-image" name="product-image" accept="image/*"><br><br>
+      <input type="file" id="product-image" name="productImage" accept="image/*"><br><br>
       <button type="submit" id="create-description">Create Description</button>
     </form>
 
     <p id="ai-product-description"></p>
-    <img id="processed-image" style="display: none;">
 
-    <script src="script.js"></script>
+    <script>
+      const form = document.querySelector('#product-form');
+      const product_name = document.querySelector('#product-name');
+      const product_details = document.querySelector('#product-details');
+      const product_type = document.querySelector('#product-type');
+      const ai_product_description = document.querySelector('#ai-product-description');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const prompt = `Generate a product description for ${product_name.value}, a ${product_type.value} that ${product_details.value}.`;
+        const api_key = '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';
+        const model = 'text-davinci-002';
+        const url = `https://api.openai.com/v1/engines/${model}/completions`;
+        const body = {
+          prompt,
+          max_tokens: 500,
+          n: 1,
+          stop: '.',
+        };
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${api_key}`,
+        };
+
+        fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: headers,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const product_description = data.choices[0].text.trim();
+            ai_product_description.textContent = product_description;
+          })
+          .catch((error) => console.log(error));
+      });
+    </script>
   </body>
 </html>
