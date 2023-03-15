@@ -1,3 +1,4 @@
+<script>
 const form = document.querySelector('#product-form');
 const product_name = document.querySelector('#product-name');
 const product_details = document.querySelector('#product-details');
@@ -56,3 +57,4 @@ form.addEventListener('submit', async (event) => {
     .then((data) => {
       const product_description = data.choices[0].text.trim();
       ai_product_description.textContent
+</script>
