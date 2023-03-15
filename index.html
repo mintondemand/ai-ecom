@@ -16,8 +16,6 @@
         <option value="Hoodie">Hoodie</option>
         <option value="Tank Top">Tank Top</option>
       </select><br><br>
-      <label for="product-image">Product Image:</label>
-      <input type="file" id="product-image" name="productImage" accept="image/*"><br><br>
       <button type="submit" id="create-description">Create Description</button>
     </form>
 
@@ -30,7 +28,7 @@
       const product_type = document.querySelector('#product-type');
       const ai_product_description = document.querySelector('#ai-product-description');
 
-      form.addEventListener('submit', (event) => {
+      form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const prompt = `Generate a product description for ${product_name.value}, a ${product_type.value} that ${product_details.value}.`;
@@ -48,17 +46,19 @@
           Authorization: `Bearer ${api_key}`,
         };
 
-        fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: headers,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            const product_description = data.choices[0].text.trim();
-            ai_product_description.textContent = product_description;
-          })
-          .catch((error) => console.log(error));
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: headers,
+          });
+
+          const data = await response.json();
+          const product_description = data.choices[0].text.trim();
+          ai_product_description.textContent = product_description;
+        } catch (error) {
+          console.log('Error generating product description:', error);
+        }
       });
     </script>
   </body>
